@@ -10,14 +10,14 @@ def main():
     print("Chargement des données...")
     
     if not os.path.exists('data.csv'):
-        print("ERREUR: Le fichier data.csv est introuvable!")
+        raise FileNotFoundError("ERREUR: Le fichier data.csv est introuvable!")
         print("Assurez-vous que le fichier se trouve à la racine du répertoire.")
         return
     
     data = read_data_file()
     
     if len(data) == 0:
-        print("ERREUR: Aucune donnée n'a pu être chargée!")
+        raise ValueError("ERREUR: Aucune donnée n'a pu être chargée!")
         return
     
     print(f"✅ {len(data)} transactions chargées avec succès!")

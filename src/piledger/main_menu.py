@@ -43,7 +43,7 @@ def display_menu(data, accounts):
             if validated_account:
                 display_transactions_by_account(data, validated_account)
             else:
-                print(f"Compte '{account_input}' introuvable!")
+                raise ValueError(f"Compte '{account_input}' introuvable!")
         else:
                     print("Nom de compte invalide!")
     elif choice == "4":
@@ -59,10 +59,10 @@ def display_menu(data, accounts):
         print("Au revoir!")
         return False
     else:
-        print("❌ Choix invalide! Veuillez sélectionner une option valide.")
+        raise ValueError("❌ Choix invalide! Veuillez sélectionner une option valide.")
         
     if choice != "0":
-        input("\nAppuyez sur Entrée pour continuer...")
+        input("\nAppuyez sur Entrée pour continuer...")  #!!!!evaluer si meilleur option
     return True    
 
 def handle_balance_inquiry(data, accounts):  # Choix 1
@@ -84,7 +84,7 @@ def handle_balance_inquiry(data, accounts):  # Choix 1
         print(f"\nSolde du compte '{validated_account}': {balance:.2f}$")
         
     else:
-        print(f"Compte '{account_input}' introuvable!")
+        raise ValueError(f"Compte '{account_input}' introuvable!")
         print("Vérifiez l'orthographe ou choisissez un compte dans la liste.")
 
 def display_all_transactions(data): # Choix 2
@@ -110,7 +110,7 @@ def display_transactions_by_account(data, account_name): # Choix 3
             print()
     
     if not found_any:
-        print(f"Aucune transaction trouvée pour le compte '{account_name}'")
+        raise ValueError(f"Aucune transaction trouvée pour le compte '{account_name}'")
 
 def display_summary(data): # Choix 4
     print("\n=== RÉSUMÉ DES COMPTES ===")
@@ -157,8 +157,7 @@ def handle_export(data, accounts): # Choix 6
     account_input = input("\nEntrez le nom du compte à exporter: ").strip()
     
     if not account_input:
-        print("Nom de compte invalide!")
-        return
+        raise ValueError("Nom de compte invalide!")
     
     validated_account = validate_account_name(accounts, account_input)
     
@@ -169,7 +168,7 @@ def handle_export(data, accounts): # Choix 6
         
         export_account_postings(data, validated_account, filename)
     else:
-        print(f"Compte '{account_input}' introuvable!")
+        raise ValueError(f"Compte '{account_input}' introuvable!")
         
 def handle_date_search(data): # Choix 7
     print("\n--- Recherche par période ---")
@@ -177,7 +176,7 @@ def handle_date_search(data): # Choix 7
     end_date = input("Date de fin (YYYY-MM-DD): ").strip()
     
     if not start_date or not end_date:
-        print("Dates invalides!")
+        raise ValueError("Dates invalides!")
         return
     
     filtered_data = get_transactions_by_date_range(data, start_date, end_date)
